@@ -1,0 +1,36 @@
+package jasmineorder.order.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+import jasmineorder.order.model.order;
+import jasmineorder.order.service.OrderService;
+
+@RestController
+@RequestMapping("/api/order")
+public class OrderController {
+
+    @Autowired
+    private OrderService orderService;
+
+    @GetMapping
+    public List<order> getAllOrder() {
+        return orderService.getAllOrder();
+    }
+
+    @PostMapping
+    public order createOrder(@RequestBody order order) {
+        return orderService.createOrder(order);
+    }
+
+    @GetMapping("/{id}")
+    public order getOrderById(@PathVariable Long id) {
+        return orderService.getOrderById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+    }
+}
