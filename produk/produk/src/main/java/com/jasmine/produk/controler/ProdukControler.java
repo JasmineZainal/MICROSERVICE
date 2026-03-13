@@ -2,19 +2,17 @@ package com.jasmine.produk.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 import com.jasmine.produk.model.produk;
 import com.jasmine.produk.service.ProdukService;
 
 @RestController
+@RequestMapping("/api/produk")   
 public class ProdukControler {
+
     @Autowired
     private ProdukService produkService;
 
@@ -26,7 +24,9 @@ public class ProdukControler {
     @GetMapping("/{id}")
     public ResponseEntity<produk> getProdukById(@PathVariable Long id){
         produk produk = produkService.getProdukbyId(id);
-        return produk != null ? ResponseEntity.ok(produk) : ResponseEntity.notFound().build();
+        return produk != null 
+            ? ResponseEntity.ok(produk) 
+            : ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class ProdukControler {
         return produkService.createProduk(produk);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")   // ← PERBAIKI INI
     public ResponseEntity<?> deleteProduk(@PathVariable Long id){
         produkService.deleteProduk(id);
         return ResponseEntity.ok().build();
